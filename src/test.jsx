@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import WebGL from "three/addons/capabilities/WebGL.js";
 import {
@@ -10,9 +10,27 @@ import {
 
 const TestComponent = () => {
   const refContainer = useRef(null);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
   useEffect(() => {
     handleShit(300, 300);
   }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setWidth, setHeight]);
 
   const handleShit = (width, height) => {
     const scene = new THREE.Scene();
@@ -22,6 +40,7 @@ const TestComponent = () => {
     const renderer = new THREE.WebGLRenderer();
     renderer.shadowMap.enabled = true;
     renderer.setSize(width, height);
+    renderer.setClearColor(0xffffff, 0);
     // renderer.setSize(window.innerWidth, window.innerHeight);
     refContainer.current &&
       refContainer.current.appendChild(renderer.domElement);
