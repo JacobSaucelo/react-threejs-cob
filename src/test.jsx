@@ -14,23 +14,24 @@ const TestComponent = () => {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    handleShit(300, 300);
+    handleShit(230, 230);
   }, []);
 
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-    }
+  // useEffect(() => {
+  //   function handleResize() {
+  //     console.log("window.innerWidth: ", window.innerWidth);
+  //     setWidth(window.innerWidth);
+  //     setHeight(window.innerHeight);
+  //   }
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    handleResize();
+  //   handleResize();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [setWidth, setHeight]);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, [setWidth, setHeight]);
 
   const handleShit = (width, height) => {
     const scene = new THREE.Scene();
@@ -94,15 +95,15 @@ const TestComponent = () => {
     }
   };
   return (
-    <div>
-      <div
-        ref={refContainer}
-        style={{
-          height: "300px",
-          width: "300px",
-          border: "1px solid red",
-        }}
-      ></div>
+    <div
+      style={{
+        border: "1px solid red",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div ref={refContainer} style={{ border: "1px solid red" }}></div>
     </div>
   );
 };
